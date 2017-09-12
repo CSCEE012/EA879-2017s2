@@ -80,3 +80,66 @@ void salvar_imagem(char *nome_do_arquivo, imagem *I) {
   FreeImage_Save(FIF_JPEG, bitmapOut, nome_do_arquivo, JPEG_DEFAULT);
 }
 
+void multi_imagem(imagem *I, float num) {
+
+   for (int i=0; i<I->width; i++) {
+     for (int j=0; j<I->height; j++) {
+      int idx;
+
+      idx = i + (j*I->width);
+      I->r[idx]= I->r[idx]*num;
+      if(I->r[idx] > 255) I->r[idx]=255.0;
+
+      I->g[idx]= I->g[idx]*num;
+      if(I->g[idx] > 255) I->g[idx]=255.0;
+
+      I->b[idx]= I->b[idx]*num;
+      if(I->b[idx] > 255) I->b[idx]=255.0;
+    } 
+   }
+}
+
+void divi_imagem(imagem *I, float num) {
+
+   for (int i=0; i<I->width; i++) {
+     for (int j=0; j<I->height; j++) {
+      int idx;
+    ///Caso num==0, punir usuário
+    if(num==0){
+      printf("Não divida por ZERO, cazzo!! CIAO!\n");
+     }
+    else{
+      idx = i + (j*I->width);
+      I->r[idx]= I->r[idx]/num;
+      if(I->r[idx] > 255) I->r[idx]=255.0;
+
+      I->g[idx]= I->g[idx]/num;
+      if(I->g[idx] > 255) I->g[idx]=255.0;
+
+      I->b[idx]= I->b[idx]/num;
+      if(I->b[idx] > 255) I->b[idx]=255.0;
+     }
+
+    } 
+   }
+}
+
+void maximo_imagem(imagem *I) {
+   
+   int max=0;
+
+   for (int i=0; i<I->width; i++) {
+     for (int j=0; j<I->height; j++) {
+      int idx,temp=0;
+
+      idx = i + (j*I->width);
+      temp = I->r[idx] + I->b[idx] + I->g[idx];
+
+      if(max <= temp) {
+        max=temp;
+      }
+
+    } 
+   }
+   printf("O valor máximo é %d \n", max/3);
+}

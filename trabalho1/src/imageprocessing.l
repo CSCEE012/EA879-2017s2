@@ -16,8 +16,10 @@ void yyerror(char *);
         return VAR;
        }
 
-
-\" { return ASPA; }
+[0-9]+[.]*[0-9]* {
+                yylval.fval = atof(yytext);
+                return NUM;
+                }
 
 [a-zA-Z0-9\.]+  {
         for (int i = 0; i < yyleng; i++ )
@@ -30,6 +32,21 @@ void yyerror(char *);
 
 [=]     {
           return IGUAL;
+        }
+[\[]    {
+          return C1;
+        }
+
+[\]]    {
+          return C2;
+        }
+
+[*]     {
+          return MULTI;
+        }
+
+[/]     {
+          return DIVI;
         }
 
 \n   {
